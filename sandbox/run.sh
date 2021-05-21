@@ -4,4 +4,4 @@
 # e.g. Android Studio -> AVD -> run device
 # e.g. iOS: `open -a simulator`
 
-flutter run 
+flutter run --no-sound-null-safety
