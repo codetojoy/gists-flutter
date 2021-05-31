@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:media_query/my_media_query.dart';
 
 import './logger.dart';
 
@@ -47,30 +48,28 @@ class _MyHomePageState extends State<MyHomePage> {
     var appBar = AppBar(
       title: Text(widget.title),
     );
-    var mediaQuery = MediaQuery.of(context);
-    var isLandscape = mediaQuery.orientation == Orientation.landscape;
-    final totalHeight = MediaQuery.of(context).size.height;
-    final appBarHeight = appBar.preferredSize.height;
-    final topPaddingHeight = MediaQuery.of(context).padding.top;
-    final availableHeight = totalHeight - (appBarHeight + topPaddingHeight);
+    var isLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
 
     var widgets = <Widget>[];
 
     if (isLandscape) {
+      var myMediaQuery = MyMediaQuery([0.1, 0.3, 0.6], context, appBar);
+      L.log('audit : ${myMediaQuery.audit()}');
       var widget1 = Container(
-        height: availableHeight * 0.1,
+        height: myMediaQuery.values[0], // availableHeight * 0.1,
         decoration: BoxDecoration(
           color: Colors.black,
         ),
       );
       var widget2 = Container(
-        height: availableHeight * 0.3,
+        height: myMediaQuery.values[1], // availableHeight * 0.3,
         decoration: BoxDecoration(
           color: Colors.blueGrey,
         ),
       );
       var widget3 = Container(
-        height: availableHeight * 0.6,
+        height: myMediaQuery.values[2], // availableHeight * 0.6,
         decoration: BoxDecoration(
           color: Colors.white,
         ),
@@ -80,20 +79,22 @@ class _MyHomePageState extends State<MyHomePage> {
       widgets.add(widget2);
       widgets.add(widget3);
     } else {
+      var myMediaQuery = MyMediaQuery([0.333, 0.333, 0.333], context, appBar);
+      L.log('audit : ${myMediaQuery.audit()}');
       var widget1 = Container(
-        height: availableHeight * 0.333,
+        height: myMediaQuery.values[0], // availableHeight * 0.333,
         decoration: BoxDecoration(
           color: Colors.black,
         ),
       );
       var widget2 = Container(
-        height: availableHeight * 0.333,
+        height: myMediaQuery.values[1], // availableHeight * 0.333,
         decoration: BoxDecoration(
           color: Colors.blueGrey,
         ),
       );
       var widget3 = Container(
-        height: availableHeight * 0.333,
+        height: myMediaQuery.values[2], // availableHeight * 0.333,
         decoration: BoxDecoration(
           color: Colors.white,
         ),
