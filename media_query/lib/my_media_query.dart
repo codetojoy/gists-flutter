@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
-import './logger.dart';
+import './auditor.dart';
 
 class MyMediaQuery {
   List<double> values = [];
-  List<double> percentages = [];
+  List<double> _percentages = [];
   double _availableHeight = 0;
+  final auditor = new Auditor();
 
   MyMediaQuery(List<double> percentages, BuildContext context, AppBar appBar) {
     var mediaQuery = MediaQuery.of(context);
@@ -14,19 +15,21 @@ class MyMediaQuery {
     final topPaddingHeight = mediaQuery.padding.top;
     _availableHeight = totalHeight - (appBarHeight + topPaddingHeight);
 
-    values = percentages.map((percentage) {
+    _percentages = percentages;
+    values = _percentages.map((percentage) {
       return _availableHeight * percentage;
     }).toList();
   }
 
   bool audit() {
-    double valueSum = 0;
-    values.forEach((value) => valueSum += value);
+    return auditPercentages() && auditValues();
+  }
 
-    final epislon = 0.9;
-    final result = (valueSum - _availableHeight).abs() < epislon;
-    L.log('MMQ.audit v: $valueSum a: $_availableHeight');
+  bool auditPercentages() {
+    return auditor.auditPercentages(_percentages);
+  }
 
-    return result;
+  bool auditValues() {
+    return auditor.auditValues(values, _availableHeight);
   }
 }

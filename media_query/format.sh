@@ -8,5 +8,6 @@ if [ -n "$1" ]; then
   flutter format ./lib/$MY_FILE
 else
   find lib -name "*.dart" -exec flutter format {} \; 
+  find test -name "*.dart" -exec flutter format {} \; 
 fi
 
