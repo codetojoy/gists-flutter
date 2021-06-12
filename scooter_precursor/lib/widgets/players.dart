@@ -5,8 +5,9 @@ import '../models/person.dart';
 
 class Players extends StatelessWidget {
   final List<Person> _people;
+  final bool _isAbbreviatedMode;
 
-  Players(this._people);
+  Players(this._people, this._isAbbreviatedMode);
 
   Widget _buildLandscape(List<Widget> widgets, BuildContext context) {
     return Card(
@@ -29,7 +30,7 @@ class Players extends StatelessWidget {
     return Card(
         child: Container(
             height: 600,
-            width: 800,
+            width: double.infinity,
             child: GridView(
                 padding: const EdgeInsets.all(10),
                 children: widgets,
@@ -45,8 +46,8 @@ class Players extends StatelessWidget {
   Widget _buildPortrait2(List<Widget> widgets, BuildContext context) {
     return Card(
         child: Container(
-            height: 600,
-            width: 600,
+            height: 400,
+            width: double.infinity,
             child: GridView(
                 padding: const EdgeInsets.all(10),
                 children: widgets,
@@ -80,7 +81,7 @@ class Players extends StatelessWidget {
     final isLandscape =
         MediaQuery.of(context).orientation == Orientation.landscape;
     final widgets = _people.map<Widget>((Person person) {
-      return Player(person);
+      return Player(person, _isAbbreviatedMode);
     }).toList();
     return (isLandscape)
         ? _buildLandscape2(widgets, context)

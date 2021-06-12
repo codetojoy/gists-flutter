@@ -38,6 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Deck _deck = new Deck(1);
   Iterable<Person> _people = [];
   bool _inProgress = false;
+  bool _isAbbreviatedMode = true;
 
   void init() {
       final numPeople = PLAYER_NAMES.length;
@@ -54,6 +55,12 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _counter++;
       init();
+    });
+  }
+
+  void _abbreviatedModeHandler() {
+    setState(() {
+      _isAbbreviatedMode = !_isAbbreviatedMode;
     });
   }
 
@@ -82,20 +89,18 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Players(_people.toList()),
-            Text(
-              'Button count:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
+            Players(_people.toList(), _isAbbreviatedMode),
           ],
         ),
       ),
       floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children:[
+      FloatingActionButton(
+        onPressed: _abbreviatedModeHandler,
+        tooltip: 'Switch abbreviation',
+        child: Icon((_isAbbreviatedMode) ? Icons.zoom_out : Icons.zoom_in),
+      ),
       FloatingActionButton(
         onPressed: _shuffleHandler,
         tooltip: 'Shuffle',
