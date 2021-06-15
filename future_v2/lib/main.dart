@@ -33,17 +33,17 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  Future<Result> _future = new Fetcher().getPlayers();
 
   void _buttonPressHandler() {
     setState(() {
       _counter++;
+     _future = new Fetcher().getPlayers();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    Future<Result> future = new Fetcher().getPlayers();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            PlayersWidget(future),
+            PlayersWidget(_future),
             Text(
               'Button count:',
             ),
@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: _buttonPressHandler,
         tooltip: 'fetch',
-        child: Icon(Icons.add),
+        child: Icon(Icons.refresh),
       ),
     );
   }
