@@ -14,27 +14,28 @@ class _SelectionWidgetState extends State<SelectionWidget> {
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(
-      style: Theme.of(context).textTheme.headline2!,
+      style: Theme.of(context).textTheme.headline6!,
       textAlign: TextAlign.center,
       child: FutureBuilder<Result>(
         future: widget
             ._selectFuture, // a previously-obtained Future<String> or null
         builder: (BuildContext context, AsyncSnapshot<Result> snapshot) {
-          List<Widget> children;
+          List<Widget> children = [];
           if (snapshot.hasData) {
             Result? result = snapshot.data;
-            var name = "n/a";
             if (result != null) {
-              name = result.people[0].name;
+              var rows = result.people.map<Widget>((person) {
+                return Text(person.name);
+              }).toList();
+              children = [
+                Column(children: rows),
+              ];
+            } else {
+              children = [
+                Text('internal error'),
+              ];
             }
-            children = <Widget>[
-              Text('name is $name'),
-              const Icon(
-                Icons.check_circle_outline,
-                color: Colors.green,
-                size: 60,
-              ),
-            ];
+
           } else if (snapshot.hasError) {
             children = <Widget>[
               const Icon(

@@ -22,7 +22,9 @@ class ApiStrategy {
     if (response.statusCode == 200) {
       // If the server did return a 200 OK response,
       // then parse the JSON.
-      return Result.fromJson(jsonDecode(response.body));
+      //
+      // re: UTF-8 issue: https://stackoverflow.com/questions/51368663
+      return Result.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
     } else {
       // If the server did not return a 200 OK response,
       // then throw an exception.
