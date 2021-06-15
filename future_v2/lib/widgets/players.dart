@@ -108,6 +108,14 @@ class _PlayersWidgetState extends State<PlayersWidget> {
         future: widget._playersFuture,
         builder: (BuildContext context, AsyncSnapshot<Result> snapshot) {
           List<Widget> children = [];
+          if (snapshot.connectionState != ConnectionState.done) {
+            children = _buildBusy(context, snapshot);
+          } else if (snapshot.hasError) {
+            children = _buildError(context, snapshot);
+          } else if (snapshot.hasData) {
+            children = _buildHasData(context, snapshot);
+          }
+          /*
           if (snapshot.hasData) {
             children = _buildHasData(context, snapshot);
           } else if (snapshot.hasError) {
@@ -115,6 +123,7 @@ class _PlayersWidgetState extends State<PlayersWidget> {
           } else {
             children = _buildBusy(context, snapshot);
           }
+          */
           return Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
