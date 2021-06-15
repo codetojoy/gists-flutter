@@ -10,18 +10,57 @@ class PlayersWidget extends StatefulWidget {
   State<PlayersWidget> createState() => _PlayersWidgetState();
 }
 
-
 class _PlayersWidgetState extends State<PlayersWidget> {
+    Widget _buildEntry(BuildContext context, String text) {
+      var fontSize = 12.0;
+      var textStyle = TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold);
+      var accentColor = Theme.of(context).accentColor;
+      return InkWell(
+          onTap: () {},
+          splashColor: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(15),
+          child: Center(
+              child: Container(
+            padding: const EdgeInsets.all(15),
+            child: Text(text, style: textStyle),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [accentColor.withOpacity(0.7), accentColor],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+              borderRadius: BorderRadius.circular(15),
+            ),
+      )));
+    }
+
   List<Widget> _buildHasData(BuildContext context, AsyncSnapshot<Result> snapshot) {
     List<Widget> children = [];
     Result? result = snapshot.data;
     if (result != null) {
-      var rows = result.people.map<Widget>((person) {
-        return Text(person.name);
+      var widgets = result.people.map<Widget>((person) {
+        return _buildEntry(context, person.name);
       }).toList();
-      children = [
-        Column(children: rows),
-      ];
+
+      var card = Card(
+        child: Container(
+            height: 400,
+            width: double.infinity,
+            child: GridView(
+                padding: const EdgeInsets.all(20),
+                children: widgets,
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 120,
+                  childAspectRatio: 3 / 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                ))),
+        elevation: 1,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        color: Theme.of(context).primaryColorLight);
+      children = [card];
     } else {
       children = [
         Text('internal error'),

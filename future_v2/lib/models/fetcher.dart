@@ -32,7 +32,7 @@ class Fetcher {
   static const context = '/scooter/players';
 
   Future<Result> getPlayers() async {
-    var delay = 2;
+    var delay = 4;
     var doShuffle = true;
     var queryParams = {
       'delay_in_seconds': '$delay',
