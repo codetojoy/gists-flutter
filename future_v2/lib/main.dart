@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import './models/api_strategy.dart';
+import './models/fetcher.dart';
 import './models/person.dart';
-import './widgets/selection.dart';
+import './widgets/players.dart';
 
 void main() {
   runApp(MyApp());
@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Future<Result> future = new ApiStrategy().getPlayers();
+    Future<Result> future = new Fetcher().getPlayers();
 
     return Scaffold(
       appBar: AppBar(
@@ -52,7 +52,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SelectionWidget(future),
+            PlayersWidget(future),
             Text(
               'Button count:',
             ),

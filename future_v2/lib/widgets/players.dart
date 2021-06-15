@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../models/person.dart';
 
-class SelectionWidget extends StatefulWidget {
-  final Future<Result> _selectFuture;
-  const SelectionWidget(this._selectFuture);
+class PlayersWidget extends StatefulWidget {
+  final Future<Result> _playersFuture;
+  const PlayersWidget(this._playersFuture);
 
   @override
-  State<SelectionWidget> createState() => _SelectionWidgetState();
+  State<PlayersWidget> createState() => _PlayersWidgetState();
 }
 
-class _SelectionWidgetState extends State<SelectionWidget> {
+class _PlayersWidgetState extends State<PlayersWidget> {
   @override
   Widget build(BuildContext context) {
     return DefaultTextStyle(
@@ -18,7 +18,7 @@ class _SelectionWidgetState extends State<SelectionWidget> {
       textAlign: TextAlign.center,
       child: FutureBuilder<Result>(
         future: widget
-            ._selectFuture, // a previously-obtained Future<String> or null
+            ._playersFuture, // a previously-obtained Future<String> or null
         builder: (BuildContext context, AsyncSnapshot<Result> snapshot) {
           List<Widget> children = [];
           if (snapshot.hasData) {

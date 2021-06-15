@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 
 import './person.dart';
 
-class ApiStrategy {
+// TODO: this should be in `services` (or similar) not `models`
+class Fetcher {
   static const host = 'localhost:8080';
   static const context = '/scooter/players';
 
